@@ -1,15 +1,15 @@
 import fs from 'node:fs'
 import zlib from 'node:zlib'
 
-export class json2csv {
+export class Json2csv {
 
 constructor(path) {
   this.path = path;
 }
 
-#convert(filter) {
+#convert(columnsWhtLst) {
   const jsonData = JSON.parse(fs.readFileSync(this.path, 'utf8'));
-  let headers = (!filter) ? Object.keys(jsonData[0]) : filter;
+  let headers = (!columnsWhtLst) ? Object.keys(jsonData[0]) : columnsWhtLst;
   let csvRows = [];
 
   csvRows.push(headers.join(","));
@@ -17,7 +17,7 @@ constructor(path) {
   for (const row of jsonData) {
     let values = headers.map(header => JSON.stringify(row[header]));
     csvRows.push(values.join(","));
-}
+  }
 
 return csvRows.join("\n"); 
 }
@@ -36,7 +36,7 @@ export class Archiver {
     switch (this.algorithm) {
       case "gzip": 
         return type === "compress" ? zlib.createGzip() : zlib.createGunzip();
-      case "deflte":
+      case "deflate":
         return type === "compress" ? zlib.createDeflate() : zlib.createInflate();
       case "brotli": 
         return type === "compress" ? zlib.createBrotliCompress() : zlib.createBrotliDecompress();
@@ -61,4 +61,3 @@ export class Archiver {
     archData.pipe(decomp).pipe(write);
   }
 }
-//

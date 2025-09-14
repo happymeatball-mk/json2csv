@@ -2,7 +2,7 @@
 
 A simple application for converting json to csv, with the ability to archive csv files.
 
-j2c.save("./data.csv", filter)                          - convert json to csv;
+j2c.save("./data.csv", filter)                          - convert json to csv ("filter" - needed columns);
 arch.compress("./data.csv", "./data.csv.gz")            - archive csv file; 
 arch.decompress("./data.csv.gz", "./restored.csv")      - unarchive csv file;
 
